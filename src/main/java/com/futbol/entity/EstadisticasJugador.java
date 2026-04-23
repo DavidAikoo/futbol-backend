@@ -1,5 +1,6 @@
 package com.futbol.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -22,6 +23,7 @@ public class EstadisticasJugador {
     @JoinColumn(name = "id_jugador", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference("jugador-estadisticas")      // ← rompe el ciclo con Jugador
     private Jugador jugador;
 
     @NotNull
@@ -29,6 +31,7 @@ public class EstadisticasJugador {
     @JoinColumn(name = "id_partido", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference("partido-estadisticas")      // ← rompe el ciclo con Partido
     private Partido partido;
 
     @Column(name = "minutos_jugados", nullable = false)
