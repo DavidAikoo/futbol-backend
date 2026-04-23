@@ -1,7 +1,7 @@
 package com.futbol.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -47,12 +47,12 @@ public class Jugador {
     @JoinColumn(name = "id_equipo", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonBackReference("equipo-jugadores")       // ← rompe el ciclo con Equipo
+    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipo;
 
     @OneToMany(mappedBy = "jugador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonManagedReference("jugador-estadisticas") // ← maneja el ciclo con EstadisticasJugador
+    @JsonIgnore
     private List<EstadisticasJugador> estadisticas;
 }

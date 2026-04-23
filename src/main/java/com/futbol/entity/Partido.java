@@ -1,7 +1,7 @@
 package com.futbol.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,7 +36,7 @@ public class Partido {
     @JoinColumn(name = "equipo_local", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"partidosComoLocal", "partidosComoVisita", "jugadores", "entrenadores"})
+    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipoLocal;
 
     @NotNull
@@ -44,7 +44,7 @@ public class Partido {
     @JoinColumn(name = "equipo_visita", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"partidosComoLocal", "partidosComoVisita", "jugadores", "entrenadores"})
+    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipoVisita;
 
     @Column(name = "goles_local", nullable = false)
@@ -56,6 +56,6 @@ public class Partido {
     @OneToMany(mappedBy = "partido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonManagedReference("partido-estadisticas")   // ← maneja el ciclo con EstadisticasJugador
+    @JsonIgnore
     private List<EstadisticasJugador> estadisticas;
 }

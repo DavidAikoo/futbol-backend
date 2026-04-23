@@ -1,8 +1,6 @@
 package com.futbol.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,24 +37,24 @@ public class Equipo {
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonManagedReference("equipo-jugadores")
+    @JsonIgnore
     private List<Jugador> jugadores;
 
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonManagedReference("equipo-entrenadores")
+    @JsonIgnore
     private List<Entrenador> entrenadores;
 
     @OneToMany(mappedBy = "equipoLocal", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("equipoLocal")
+    @JsonIgnore
     private List<Partido> partidosComoLocal;
 
     @OneToMany(mappedBy = "equipoVisita", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("equipoVisita")
+    @JsonIgnore
     private List<Partido> partidosComoVisita;
 }
