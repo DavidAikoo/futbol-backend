@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: futbol-backend
+    runtime: java
+    plan: free
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -jar target/futbol-backend-1.0.0.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:5432/postgres
+      - key: SPRING_DATASOURCE_USERNAME
+        value: postgres.jxvbbrlrfwzxmrtuycjr
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: lwwBaetRzn2tOhFz
+      - key: SERVER_PORT
+        value: "8080"
