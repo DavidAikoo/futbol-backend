@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class EstadisticasJugador {
 
     @Id
@@ -23,7 +24,7 @@ public class EstadisticasJugador {
     @JoinColumn(name = "id_jugador", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"estadisticas", "equipo"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "estadisticas", "equipo"})
     private Jugador jugador;
 
     @NotNull
@@ -31,7 +32,7 @@ public class EstadisticasJugador {
     @JoinColumn(name = "id_partido", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"estadisticas", "equipoLocal", "equipoVisita"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "estadisticas", "equipoLocal", "equipoVisita"})
     private Partido partido;
 
     @Column(name = "minutos_jugados", nullable = false)

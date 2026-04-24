@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Partido {
 
     @Id
@@ -36,7 +37,7 @@ public class Partido {
     @JoinColumn(name = "equipo_local", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipoLocal;
 
     @NotNull
@@ -44,7 +45,7 @@ public class Partido {
     @JoinColumn(name = "equipo_visita", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipoVisita;
 
     @Column(name = "goles_local", nullable = false)

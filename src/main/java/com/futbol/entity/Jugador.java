@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Jugador {
 
     @Id
@@ -47,7 +48,7 @@ public class Jugador {
     @JoinColumn(name = "id_equipo", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties({"jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jugadores", "entrenadores", "partidosComoLocal", "partidosComoVisita"})
     private Equipo equipo;
 
     @OneToMany(mappedBy = "jugador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
