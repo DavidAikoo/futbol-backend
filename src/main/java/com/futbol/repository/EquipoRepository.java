@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EquipoRepository extends JpaRepository<Equipo, Long> {
-
-    /**
-     * Suma total de goles (como local + como visitante) de un equipo en todos sus partidos.
-     */
     @Query(value = """
             SELECT COALESCE(SUM(g.total), 0)
             FROM (

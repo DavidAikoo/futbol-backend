@@ -7,13 +7,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JugadorRepository extends JpaRepository<Jugador, Long> {
 
-    /**
-     * Obtiene todos los jugadores de un equipo específico.
-     */
+    @Query("SELECT j FROM Jugador j JOIN FETCH j.equipo ORDER BY j.idJugador")
+    List<Jugador> findAll();
+
+    @Query("SELECT j FROM Jugador j JOIN FETCH j.equipo WHERE j.idJugador = :id")
+    Optional<Jugador> findById(@Param("id") Long id);
+
     @Query(value = """
             SELECT * FROM jugador
             WHERE id_equipo = :idEquipo
@@ -21,9 +25,6 @@ public interface JugadorRepository extends JpaRepository<Jugador, Long> {
             """, nativeQuery = true)
     List<Jugador> findByEquipoId(@Param("idEquipo") Long idEquipo);
 
-    /**
-     * Jugadores cuyo total de goles acumulados en estadísticas supera el mínimo indicado.
-     */
     @Query(value = """
             SELECT j.*
             FROM jugador j
