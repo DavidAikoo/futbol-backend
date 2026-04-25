@@ -28,6 +28,7 @@ public class EquipoService {
     }
 
     public Equipo save(Equipo equipo) {
+        equipo.setIdEquipo(null); // ← CLAVE: ignora el id que venga del JSON
         return equipoRepository.save(equipo);
     }
 
@@ -40,7 +41,7 @@ public class EquipoService {
     }
 
     public void delete(Long id) {
-        findById(id); // Verifica existencia
+        findById(id);
         equipoRepository.deleteById(id);
     }
 

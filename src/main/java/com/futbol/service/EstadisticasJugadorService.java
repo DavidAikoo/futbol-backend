@@ -28,6 +28,7 @@ public class EstadisticasJugadorService {
     }
 
     public EstadisticasJugador save(EstadisticasJugador estadisticas) {
+        estadisticas.setIdEstadistica(null); // ← CLAVE
         return estadisticasRepository.save(estadisticas);
     }
 

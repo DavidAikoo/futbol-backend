@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.LinkedHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +30,7 @@ public class PartidoService {
     }
 
     public Partido save(Partido partido) {
+        partido.setIdPartido(null); // ← CLAVE
         return partidoRepository.save(partido);
     }
 
@@ -54,13 +55,13 @@ public class PartidoService {
         List<Object[]> rows = partidoRepository.getResultadosConNombres();
         return rows.stream().map(row -> {
             Map<String, Object> map = new LinkedHashMap<>();
-            map.put("idPartido",     row[0]);
-            map.put("fecha",         row[1]);
-            map.put("estadio",       row[2]);
-            map.put("equipoLocal",   row[3]);
-            map.put("equipoVisita",  row[4]);
-            map.put("golesLocal",    row[5]);
-            map.put("golesVisita",   row[6]);
+            map.put("idPartido",    row[0]);
+            map.put("fecha",        row[1]);
+            map.put("estadio",      row[2]);
+            map.put("equipoLocal",  row[3]);
+            map.put("equipoVisita", row[4]);
+            map.put("golesLocal",   row[5]);
+            map.put("golesVisita",  row[6]);
             return map;
         }).toList();
     }

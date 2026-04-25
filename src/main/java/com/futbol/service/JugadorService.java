@@ -28,6 +28,7 @@ public class JugadorService {
     }
 
     public Jugador save(Jugador jugador) {
+        jugador.setIdJugador(null); // ← CLAVE
         return jugadorRepository.save(jugador);
     }
 

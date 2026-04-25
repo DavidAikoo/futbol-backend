@@ -28,6 +28,7 @@ public class EntrenadorService {
     }
 
     public Entrenador save(Entrenador entrenador) {
+        entrenador.setIdEntrenador(null); // ← CLAVE
         return entrenadorRepository.save(entrenador);
     }
 
