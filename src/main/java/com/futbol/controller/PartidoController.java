@@ -1,5 +1,7 @@
 package com.futbol.controller;
 
+import com.futbol.dto.PartidoRequest;
+import com.futbol.entity.Equipo;
 import com.futbol.entity.Partido;
 import com.futbol.service.PartidoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,8 +38,8 @@ public class PartidoController {
     @GetMapping("/{id}")
     @Operation(summary = "Obtener partido por ID")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Partido encontrado"),
-        @ApiResponse(responseCode = "404", description = "Partido no encontrado")
+            @ApiResponse(responseCode = "200", description = "Partido encontrado"),
+            @ApiResponse(responseCode = "404", description = "Partido no encontrado")
     })
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
@@ -51,20 +53,22 @@ public class PartidoController {
     @PostMapping
     @Operation(summary = "Registrar un nuevo partido")
     @ApiResponse(responseCode = "201", description = "Partido creado exitosamente")
-    public ResponseEntity<Partido> save(@Valid @RequestBody Partido partido) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(partidoService.save(partido));
+    public ResponseEntity<Partido> save(@Valid @RequestBody PartidoRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(partidoService.save(toEntity(request)));
     }
 
     // ─── PUT ──────────────────────────────────────────────────────────────────
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar datos de un partido")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Partido actualizado"),
-        @ApiResponse(responseCode = "404", description = "Partido no encontrado")
+            @ApiResponse(responseCode = "200", description = "Partido actualizado"),
+            @ApiResponse(responseCode = "404", description = "Partido no encontrado")
     })
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Partido partido) {
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @Valid @RequestBody PartidoRequest request) {
         try {
-            return ResponseEntity.ok(partidoService.update(id, partido));
+            return ResponseEntity.ok(partidoService.update(id, toEntity(request)));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -74,8 +78,8 @@ public class PartidoController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar un partido")
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Partido eliminado"),
-        @ApiResponse(responseCode = "404", description = "Partido no encontrado")
+            @ApiResponse(responseCode = "204", description = "Partido eliminado"),
+            @ApiResponse(responseCode = "404", description = "Partido no encontrado")
     })
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
@@ -86,14 +90,29 @@ public class PartidoController {
         }
     }
 
-    // ─── CONSULTA NATIVA: RESULTADOS CON NOMBRES ─────────────────────────────
+    // ─── RESULTADOS CON NOMBRES ───────────────────────────────────────────────
     @GetMapping("/resultados")
-    @Operation(
-        summary     = "Resultados de todos los partidos con nombres de equipo",
-        description = "Devuelve cada partido con el nombre del equipo local y visitante (JOIN con equipo)"
-    )
+    @Operation(summary = "Resultados de todos los partidos con nombres de equipo")
     @ApiResponse(responseCode = "200", description = "Lista de resultados con nombres de equipos")
     public ResponseEntity<List<Map<String, Object>>> getResultadosConNombres() {
         return ResponseEntity.ok(partidoService.getResultadosConNombres());
+    }
+
+    // ─── HELPER ───────────────────────────────────────────────────────────────
+    private Partido toEntity(PartidoRequest req) {
+        Equipo local = new Equipo();
+        local.setIdEquipo(req.getEquipoLocal().getIdEquipo());
+
+        Equipo visita = new Equipo();
+        visita.setIdEquipo(req.getEquipoVisita().getIdEquipo());
+
+        Partido partido = new Partido();
+        partido.setFecha(req.getFecha());
+        partido.setEstadio(req.getEstadio());
+        partido.setEquipoLocal(local);
+        partido.setEquipoVisita(visita);
+        partido.setGolesLocal(req.getGolesLocal());
+        partido.setGolesVisita(req.getGolesVisita());
+        return partido;
     }
 }

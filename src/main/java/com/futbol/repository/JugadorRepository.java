@@ -18,21 +18,19 @@ public interface JugadorRepository extends JpaRepository<Jugador, Long> {
     @Query("SELECT j FROM Jugador j JOIN FETCH j.equipo WHERE j.idJugador = :id")
     Optional<Jugador> findById(@Param("id") Long id);
 
-    @Query(value = """
-            SELECT * FROM jugador
-            WHERE id_equipo = :idEquipo
-            ORDER BY dorsal
-            """, nativeQuery = true)
+    // ── JOIN FETCH para evitar LazyInitializationException en serialización ──
+    @Query("SELECT j FROM Jugador j JOIN FETCH j.equipo WHERE j.equipo.idEquipo = :idEquipo ORDER BY j.dorsal")
     List<Jugador> findByEquipoId(@Param("idEquipo") Long idEquipo);
 
-    @Query(value = """
-            SELECT j.*
-            FROM jugador j
-            INNER JOIN estadisticas_jugador e ON e.id_jugador = j.id_jugador
-            GROUP BY j.id_jugador, j.nombre, j.posicion, j.dorsal,
-                     j.fecha_nac, j.nacionalidad, j.id_equipo
-            HAVING SUM(e.goles) > :minGoles
-            ORDER BY SUM(e.goles) DESC
-            """, nativeQuery = true)
+    @Query("""
+            SELECT j FROM Jugador j JOIN FETCH j.equipo
+            WHERE j.idJugador IN (
+                SELECT e.jugador.idJugador
+                FROM EstadisticasJugador e
+                GROUP BY e.jugador.idJugador
+                HAVING SUM(e.goles) > :minGoles
+            )
+            ORDER BY j.idJugador
+            """)
     List<Jugador> findJugadoresConMasGoles(@Param("minGoles") int minGoles);
 }
