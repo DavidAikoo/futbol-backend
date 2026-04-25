@@ -59,6 +59,7 @@ public class EquipoController {
         equipo.setNombre(request.getNombre());
         equipo.setCiudad(request.getCiudad());
         equipo.setFundacion(request.getFundacion());
+        equipo.setFotoUrl(request.getFotoUrl());
         return ResponseEntity.status(HttpStatus.CREATED).body(equipoService.save(equipo));
     }
 
@@ -77,6 +78,7 @@ public class EquipoController {
             equipo.setNombre(request.getNombre());
             equipo.setCiudad(request.getCiudad());
             equipo.setFundacion(request.getFundacion());
+            equipo.setFotoUrl(request.getFotoUrl());
             return ResponseEntity.ok(equipoService.update(id, equipo));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

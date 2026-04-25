@@ -37,6 +37,7 @@ public class EquipoService {
         existente.setNombre(equipoActualizado.getNombre());
         existente.setCiudad(equipoActualizado.getCiudad());
         existente.setFundacion(equipoActualizado.getFundacion());
+        existente.setFotoUrl(equipoActualizado.getFotoUrl());
         return equipoRepository.save(existente);
     }
 

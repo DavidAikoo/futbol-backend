@@ -13,6 +13,8 @@ public class EntrenadorRequest {
     @NotBlank
     private String especialidad;
 
+    private String fotoUrl;
+
     @NotNull
     private EquipoRef equipo;
 

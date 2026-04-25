@@ -24,6 +24,8 @@ public class JugadorRequest {
     @NotBlank
     private String nacionalidad;
 
+    private String fotoUrl;
+
     @NotNull
     private EquipoRef equipo;
 

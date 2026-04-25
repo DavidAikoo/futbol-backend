@@ -36,6 +36,7 @@ public class EntrenadorService {
         Entrenador existente = findById(id);
         existente.setNombre(actualizado.getNombre());
         existente.setEspecialidad(actualizado.getEspecialidad());
+        existente.setFotoUrl(actualizado.getFotoUrl());
         existente.setEquipo(actualizado.getEquipo());
         return entrenadorRepository.save(existente);
     }

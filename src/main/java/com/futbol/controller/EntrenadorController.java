@@ -107,6 +107,7 @@ public class EntrenadorController {
         Entrenador entrenador = new Entrenador();
         entrenador.setNombre(req.getNombre());
         entrenador.setEspecialidad(req.getEspecialidad());
+        entrenador.setFotoUrl(req.getFotoUrl());
         entrenador.setEquipo(equipo);
         return entrenador;
     }

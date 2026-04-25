@@ -39,6 +39,7 @@ public class JugadorService {
         existente.setDorsal(actualizado.getDorsal());
         existente.setFechaNac(actualizado.getFechaNac());
         existente.setNacionalidad(actualizado.getNacionalidad());
+        existente.setFotoUrl(actualizado.getFotoUrl());
         existente.setEquipo(actualizado.getEquipo());
         return jugadorRepository.save(existente);
     }

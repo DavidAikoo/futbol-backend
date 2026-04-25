@@ -34,6 +34,9 @@ public class Equipo {
     @Column(nullable = false)
     private LocalDate fundacion;
 
+    @Column(name = "foto_url", length = 500)
+    private String fotoUrl;
+
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -123,6 +123,7 @@ public class JugadorController {
         jugador.setDorsal(req.getDorsal());
         jugador.setFechaNac(req.getFechaNac());
         jugador.setNacionalidad(req.getNacionalidad());
+        jugador.setFotoUrl(req.getFotoUrl());
         jugador.setEquipo(equipo);
         return jugador;
     }

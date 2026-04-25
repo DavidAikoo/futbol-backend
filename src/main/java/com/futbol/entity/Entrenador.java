@@ -27,6 +27,9 @@ public class Entrenador {
     @Column(nullable = false, length = 100)
     private String especialidad;
 
+    @Column(name = "foto_url", length = 500)
+    private String fotoUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_equipo", nullable = false)
     @ToString.Exclude

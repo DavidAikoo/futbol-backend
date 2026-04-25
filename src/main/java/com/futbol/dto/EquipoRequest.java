@@ -17,4 +17,6 @@ public class EquipoRequest {
 
     @NotNull
     private LocalDate fundacion;
+
+    private String fotoUrl;
 }
